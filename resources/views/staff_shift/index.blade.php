@@ -12,13 +12,13 @@
                         <thead>
                         <tr>
                             <th>Staff ID</th>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thursday</th>
-                            <th>Friday</th>
-                            <th>Saturday</th>
-                            <th>Sunday</th>
+                            <th>Day 0</th>
+                            <th>Day 1</th>
+                            <th>Day 2</th>
+                            <th>Day 3</th>
+                            <th>Day 4</th>
+                            <th>Day 5</th>
+                            <th>Day 6</th>
                         </tr>
                         </thead>
 
@@ -30,9 +30,9 @@
                             @endforeach
                         </tr>
                         <tr>
-                            <th>Work Duration - Alone</th>
-                            @foreach($workDays as $day)
-                                <th>{{ $day->workHours }}</th>
+                            <th>Work Duration - Bonus Minutes</th>
+                            @foreach($bonusWorkDays as $minutes)
+                                <th>{{ $minutes }}</th>
                             @endforeach
                         </tr>
                         </tfoot>

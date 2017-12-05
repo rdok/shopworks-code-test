@@ -8,37 +8,28 @@ namespace App\Acme\RotaSlotStaff;
 
 use App\RotaSlotStaff;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class BonusWorkHours
 {
-//    public function build($rotaSlotStaffIds)
-//    {
-//        /** @var Collection $rotaSlotStaffCollection */
-//        $rotaSlotStaffCollection = RotaSlotStaff::whereIn(
-//            'id', $rotaSlotStaffIds
-//        );
+    /** @var FindClosestRotaSlotStaffEndDate */
+    private $findClosestRotaSlotStaffEndDate;
+    /** @var FindClosestRotaSlotStaffStartDate */
+    private $findClosestRotaSlotStaffStartDate;
+    /** @var ShiftIsInBetweenAnotherShift */
+    private $shiftIsInBetweenAnotherShift;
 
-//        $dayNumbers = RotaSlotStaff::dayNumbers();
+    public function __construct(
+        ShiftIsInBetweenAnotherShift $shiftIsInBetweenAnotherShift,
+        FindClosestRotaSlotStaffEndDate $findClosestRotaSlotStaffEndDate,
+        FindClosestRotaSlotStaffStartDate $findClosestRotaSlotStaffStartDate)
+    {
+        $this->findClosestRotaSlotStaffEndDate = $findClosestRotaSlotStaffEndDate;
+        $this->findClosestRotaSlotStaffStartDate = $findClosestRotaSlotStaffStartDate;
+        $this->shiftIsInBetweenAnotherShift = $shiftIsInBetweenAnotherShift;
+    }
 
-//        $rotaSlotStaffCollection = $rotaSlotStaffCollection->reject(
-//            function (RotaSlotStaff $rotaSlotStaff) use ($rotaSlotStaffCollection) {
-//                /** @var Carbon $startTime */
-//                $startTime = $rotaSlotStaff->starTime;
-
-//                return $rotaSlotStaffCollection->search(
-//                    function (RotaSlotStaff $searchedItem) use ($startTime) {
-//                        return $startTime->between(
-//                            $searchedItem->startTime, $searchedItem->endTime
-//                        );
-//                    }
-//                );
-//            }
-//        );
-//
-//        return $rotaSlotStaffCollection;
-//    }
-
-    public function handle()
+    public function handle(Collection $rotaSlotStaffCollection)
     {
         $bonusTimes = [];
         $dayNumbers = RotaSlotStaff::dayNumbers();
@@ -46,14 +37,20 @@ class BonusWorkHours
             $bonusTimes[$dayNumber] = 0;
         }
 
-        /** @var RotaSlotStaff $rotaSlotStaff */
-        $rotaSlotStaff = RotaSlotStaff::get();
+        foreach ($rotaSlotStaffCollection as $key => $shift) {
 
-        foreach ($rotaSlotStaff as $shift) {
+            if ($this->shiftIsInBetweenAnotherShift
+                ->handle($shift, $rotaSlotStaffCollection)) {
+                continue;
+            }
+
             /** @var Carbon $startTime */
-            $startTime = $shift->startTime;
+            $startTime = $this->findClosestRotaSlotStaffStartDate
+                ->handle($shift, $rotaSlotStaffCollection);
+
             /** @var Carbon $endTime */
-            $endTime = $shift->endTime;
+            $endTime = $this->findClosestRotaSlotStaffEndDate
+                ->handle($shift, $rotaSlotStaffCollection);
 
             $minutes = $endTime->diffInMinutes($startTime);
 

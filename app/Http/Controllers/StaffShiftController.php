@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Acme\RotaSlotStaff\DailyWorkHours;
 use App\Acme\RotaSlotStaff\BonusWorkHours;
+use App\Acme\RotaSlotStaff\DailyWorkHours;
 use App\Acme\RotaSlotStaff\StaffWithShifts;
 
 class StaffShiftController extends Controller
@@ -16,13 +16,15 @@ class StaffShiftController extends Controller
         $rotaSlotStaffIds = $staffWithShiftsBuilder->pluck('id');
 
         $workDays = $workDays->build($rotaSlotStaffIds)->get();
-        $workDaysAlone = $dailyWorkHoursAlone->build($rotaSlotStaffIds)->get();
+
+        $bonusWorkDays = $dailyWorkHoursAlone
+            ->handle($staffWithShiftsBuilder->get());
 
         $staffWithShifts = $staffWithShiftsBuilder->groupBy('staffid')
             ->paginate(10);
 
         return view('staff_shift.index', compact(
-            'staffWithShifts', 'workDays', 'workDaysAlone'
+            'staffWithShifts', 'workDays', 'bonusWorkDays'
         ));
     }
 }
