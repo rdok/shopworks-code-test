@@ -22,21 +22,30 @@
                         </tr>
                         </thead>
 
-                        <?php /** @var \App\RotaSlotStaff $slotStaff */?>
-                        <?php /** @var \Illuminate\Pagination\LengthAwarePaginator $rotaSlotStaff */?>
-                        @foreach($rotaSlotStaff as $slotStaff)
+                        <tfoot>
+                        <tr>
+                            <th>Total Hours Worked</th>
+                            @foreach($workDays as $day)
+                                <th>{{ $day->workHours }}</th>
+                            @endforeach
+                        </tr>
+                        </tfoot>
+
+                        <?php /** @var \App\RotaSlotStaff $staff */?>
+                        <?php /** @var \Illuminate\Pagination\LengthAwarePaginator $staffWithShifts */?>
+                        @foreach($staffWithShifts as $staff)
                             <tr>
-                                <td id="{!! $slotStaff->staffid !!}">
-                                    {{ $slotStaff->staffid }}
+                                <td id="{!! $staff->staffid !!}">
+                                    {{ $staff->staffid }}
                                 </td>
-                                @foreach($slotStaff->shifts as $shift)
+                                @foreach($staff->shifts as $shift)
                                     <td>{{ $shift->shift }}</td>
                                 @endforeach
                             </tr>
                         @endforeach
                     </table>
                 </div>
-                {{ $rotaSlotStaff->links() }}
+                {{ $staffWithShifts->links() }}
             </div>
         </div>
     </div>

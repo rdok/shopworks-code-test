@@ -51,4 +51,9 @@ class RotaSlotStaff extends Model
 
         return $startTime . ' - ' . $endTime;
     }
+
+    public function getWorkHoursAttribute()
+    {
+        return number_format($this->toArray()['workHours'], 2);
+    }
 }

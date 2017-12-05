@@ -74,7 +74,7 @@
         </div>
 
         <div class="links">
-            <a href="{!! route('shift_time.index') !!}">Shift Times</a>
+            <a href="{!! route('staff_shift.index') !!}">Staff Shifts</a>
         </div>
     </div>
 </div>

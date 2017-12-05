@@ -6,4 +6,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('shift_time', 'ShiftTimeController', ['only' => 'index']);
+Route::resource('staff_shift', 'StaffShiftController', ['only' => 'index']);
