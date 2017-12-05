@@ -6,6 +6,9 @@
 
 namespace App\Acme\RotaSlotStaff;
 
+use App\RotaSlotStaff;
+use Carbon\Carbon;
+
 class BonusWorkHours
 {
 //    public function build($rotaSlotStaffIds)
@@ -37,6 +40,13 @@ class BonusWorkHours
 
     public function handle()
     {
-        return [2 => 45];
+        /** @var RotaSlotStaff $rotaSlotStaff */
+        $rotaSlotStaff = RotaSlotStaff::first();
+        /** @var Carbon $startTime */
+        $startTime = $rotaSlotStaff->startTime;
+        /** @var Carbon $endTime */
+        $endTime = $rotaSlotStaff->endTime;
+
+        return [$rotaSlotStaff->daynumber => $endTime->diffInMinutes($startTime)];
     }
 }

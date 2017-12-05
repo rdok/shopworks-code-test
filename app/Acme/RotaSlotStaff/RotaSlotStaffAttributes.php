@@ -23,7 +23,7 @@ trait RotaSlotStaffAttributes
     /** @return Carbon */
     public function getEndTimeAttribute()
     {
-        $endTimeString = $this->getOriginal('starttime');
+        $endTimeString = $this->getOriginal('endtime');
 
         $endTime = $endTimeString
             ? Carbon::createFromFormat('H:i:s', $endTimeString) : null;
@@ -32,7 +32,7 @@ trait RotaSlotStaffAttributes
             return $endTime;
         }
 
-        if ($endTime->greaterThan($this->startTime)) {
+        if ($endTime->lessThan($this->startTime)) {
             $endTime->addDay();
         }
 

@@ -40,8 +40,6 @@ class DailyWorkHoursAloneTest extends TestCase
         // rotal slot staff
         $bonusTimes = $this->bonusWorkHours->handle();
 
-        $this->assertEquals([
-            $dayNumber => 45
-        ], $bonusTimes);
+        $this->assertEquals([$dayNumber => 45], $bonusTimes);
     }
 }
