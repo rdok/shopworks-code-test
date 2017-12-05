@@ -2,19 +2,25 @@
 
 namespace App;
 
-use Carbon\Carbon;
+use App\Acme\RotaSlotStaff\RotaSlotStaffAttributes as Attributes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class RotaSlotStaff extends Model
 {
+    use Attributes;
+
     protected $table = 'rota_slot_staff';
-    protected $dates = [];
+    protected $fillable = ['starttime', 'endtime'];
 
     public static function staffIds()
     {
         return RotaSlotStaff::shift()->staff()->select('staffid')
             ->groupBy('staffid');
+    }
+    public static function dayNumbers()
+    {
+        return RotaSlotStaff::groupBy('daynumber')->pluck('daynumber');
     }
 
     /** Scope a query to only include rota slot staff with shift slot type.*/
@@ -37,23 +43,5 @@ class RotaSlotStaff extends Model
     public function shifts()
     {
         return $this->hasMany(RotaSlotStaff::class, 'staffid', 'staffid');
-    }
-
-    public function getShiftAttribute()
-    {
-        $startTime = $this->starttime
-            ? Carbon::createFromFormat('H:i:s', $this->starttime)->format('H:i')
-            : null;
-
-        $endTime = $this->endtime
-            ? Carbon::createFromFormat('H:i:s', $this->endtime)->format('H:i')
-            : null;
-
-        return $startTime . ' - ' . $endTime;
-    }
-
-    public function getWorkHoursAttribute()
-    {
-        return number_format($this->toArray()['workHours'], 2);
     }
 }

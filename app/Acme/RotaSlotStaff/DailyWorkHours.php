@@ -15,15 +15,5 @@ class DailyWorkHours
         return RotaSlotStaff::whereIn('id', $rotaSlotStaffIds)
             ->selectRaw('daynumber, sum(workhours) as workHours')
             ->groupBy('daynumber');
-
-//        dd(
-//            RotaSlotStaff::
-//                ->selectRaw('daynumber, time(sum(TIMEDIFF( starttime, endtime ))) as total')
-//                selectRaw("daynumber, time(sum(timediff(starttime, endtime))) as result")
-//                selectRaw('daynumber, sec_to_time(abs(sum(time_to_sec(starttime) - time_to_sec(endtime)))) as total')
-//                ->groupBy('daynumber')
-//            ->toSql()
-//                ->first()->toArray()
-//        );
     }
 }

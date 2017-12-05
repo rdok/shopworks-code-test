@@ -24,7 +24,13 @@
 
                         <tfoot>
                         <tr>
-                            <th>Total Hours Worked</th>
+                            <th>Work Duration</th>
+                            @foreach($workDays as $day)
+                                <th>{{ $day->workHours }}</th>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            <th>Work Duration - Alone</th>
                             @foreach($workDays as $day)
                                 <th>{{ $day->workHours }}</th>
                             @endforeach
