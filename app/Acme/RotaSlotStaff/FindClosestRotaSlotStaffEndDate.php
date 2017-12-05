@@ -7,6 +7,7 @@
 namespace App\Acme\RotaSlotStaff;
 
 use App\RotaSlotStaff;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class FindClosestRotaSlotStaffEndDate
@@ -20,12 +21,19 @@ class FindClosestRotaSlotStaffEndDate
                 continue;
             }
 
-            $isBetween = $rotaSlotStaff->endTime
-                ->between($slot->startTime, $slot->endTime);
+            /** @var Carbon $endTime */
+            $endTime = $rotaSlotStaff->endTime;
+
+            $isBetween = $endTime->between($slot->startTime, $slot->endTime);
 
             if ($isBetween) {
                 return $slot->startTime;
             }
+
+
+//            if ($endTime->gt($slot->startTime)) {
+//                return $slot->startTime;
+//            }
         }
 
         return $rotaSlotStaff->endTime;

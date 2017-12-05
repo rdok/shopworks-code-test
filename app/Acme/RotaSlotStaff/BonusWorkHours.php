@@ -54,6 +54,11 @@ class BonusWorkHours
 
             $minutes = $endTime->diffInMinutes($startTime);
 
+            if($shift->daynumber == 1){
+//                dd($startTime);
+//                dd($endTime);
+//                dd($shift->daynumber);
+            }
             $bonusTimes[$shift->daynumber] += $minutes;
         }
 
