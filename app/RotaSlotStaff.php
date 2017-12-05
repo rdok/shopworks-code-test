@@ -11,6 +11,7 @@ class RotaSlotStaff extends Model
     use Attributes;
 
     protected $table = 'rota_slot_staff';
+    public $timestamps = false;
     protected $fillable = ['starttime', 'endtime'];
 
     public static function staffIds()
@@ -18,6 +19,7 @@ class RotaSlotStaff extends Model
         return RotaSlotStaff::shift()->staff()->select('staffid')
             ->groupBy('staffid');
     }
+
     public static function dayNumbers()
     {
         return RotaSlotStaff::groupBy('daynumber')->pluck('daynumber');

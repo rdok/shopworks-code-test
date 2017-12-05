@@ -12,11 +12,9 @@ class ShiftTimeTest extends TestCase
     {
         $rotaSlotStaff = RotaSlotStaff::shift()->first();
 
-        $response = $this->get(route('shift_time.index'));
+        $response = $this->get(route('staff_shift.index'));
 
-        $response->assertSee($rotaSlotStaff->starttime);
-
-        $response->assertSee($rotaSlotStaff->endtime);
+        $response->assertSee($rotaSlotStaff->shift);
 
         $response->assertSee('id="' . $rotaSlotStaff->staffid);
     }

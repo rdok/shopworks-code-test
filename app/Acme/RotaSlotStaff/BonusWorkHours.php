@@ -6,20 +6,16 @@
 
 namespace App\Acme\RotaSlotStaff;
 
-use App\RotaSlotStaff;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
-
-class DailyWorkHoursAlone
+class BonusWorkHours
 {
-    public function build($rotaSlotStaffIds)
-    {
-        /** @var Collection $rotaSlotStaffCollection */
-        $rotaSlotStaffCollection = RotaSlotStaff::whereIn(
-            'id', $rotaSlotStaffIds
-        );
+//    public function build($rotaSlotStaffIds)
+//    {
+//        /** @var Collection $rotaSlotStaffCollection */
+//        $rotaSlotStaffCollection = RotaSlotStaff::whereIn(
+//            'id', $rotaSlotStaffIds
+//        );
 
-        $dayNumbers = RotaSlotStaff::dayNumbers();
+//        $dayNumbers = RotaSlotStaff::dayNumbers();
 
 //        $rotaSlotStaffCollection = $rotaSlotStaffCollection->reject(
 //            function (RotaSlotStaff $rotaSlotStaff) use ($rotaSlotStaffCollection) {
@@ -35,7 +31,12 @@ class DailyWorkHoursAlone
 //                );
 //            }
 //        );
+//
+//        return $rotaSlotStaffCollection;
+//    }
 
-        return $rotaSlotStaffCollection;
+    public function handle()
+    {
+        return [2 => 45];
     }
 }

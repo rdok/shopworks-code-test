@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Acme\RotaSlotStaff\DailyWorkHours;
-use App\Acme\RotaSlotStaff\DailyWorkHoursAlone;
+use App\Acme\RotaSlotStaff\BonusWorkHours;
 use App\Acme\RotaSlotStaff\StaffWithShifts;
 
 class StaffShiftController extends Controller
 {
     public function index(StaffWithShifts $staffWithShifts,
                           DailyWorkHours $workDays,
-                          DailyWorkHoursAlone $dailyWorkHoursAlone)
+                          BonusWorkHours $dailyWorkHoursAlone)
     {
         $staffWithShiftsBuilder = $staffWithShifts->build();
         $rotaSlotStaffIds = $staffWithShiftsBuilder->pluck('id');

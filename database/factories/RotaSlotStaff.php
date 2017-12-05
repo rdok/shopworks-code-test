@@ -1,8 +1,9 @@
 <?php
 
+use App\RotaSlotStaff;
 use Faker\Generator as Faker;
 
-$factory->define(Model::class, function (Faker $faker) {
+$factory->define(RotaSlotStaff::class, function (Faker $faker) {
     return [
         //
     ];
