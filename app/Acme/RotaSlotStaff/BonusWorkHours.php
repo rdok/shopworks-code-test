@@ -40,13 +40,26 @@ class BonusWorkHours
 
     public function handle()
     {
-        /** @var RotaSlotStaff $rotaSlotStaff */
-        $rotaSlotStaff = RotaSlotStaff::first();
-        /** @var Carbon $startTime */
-        $startTime = $rotaSlotStaff->startTime;
-        /** @var Carbon $endTime */
-        $endTime = $rotaSlotStaff->endTime;
+        $bonusTimes = [];
+        $dayNumbers = RotaSlotStaff::dayNumbers();
+        foreach ($dayNumbers as $dayNumber) {
+            $bonusTimes[$dayNumber] = 0;
+        }
 
-        return [$rotaSlotStaff->daynumber => $endTime->diffInMinutes($startTime)];
+        /** @var RotaSlotStaff $rotaSlotStaff */
+        $rotaSlotStaff = RotaSlotStaff::get();
+
+        foreach ($rotaSlotStaff as $shift) {
+            /** @var Carbon $startTime */
+            $startTime = $shift->startTime;
+            /** @var Carbon $endTime */
+            $endTime = $shift->endTime;
+
+            $minutes = $endTime->diffInMinutes($startTime);
+
+            $bonusTimes[$shift->daynumber] += $minutes;
+        }
+
+        return $bonusTimes;
     }
 }

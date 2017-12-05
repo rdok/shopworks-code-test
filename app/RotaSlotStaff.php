@@ -10,8 +10,8 @@ class RotaSlotStaff extends Model
 {
     use Attributes;
 
-    protected $table = 'rota_slot_staff';
     public $timestamps = false;
+    protected $table = 'rota_slot_staff';
     protected $fillable = ['starttime', 'endtime'];
 
     public static function staffIds()
@@ -20,9 +20,11 @@ class RotaSlotStaff extends Model
             ->groupBy('staffid');
     }
 
+    /** @return \Illuminate\Support\Collection */
     public static function dayNumbers()
     {
-        return RotaSlotStaff::groupBy('daynumber')->pluck('daynumber');
+        return RotaSlotStaff::groupBy('daynumber')->orderBy('daynumber', 'asc')
+            ->pluck('daynumber');
     }
 
     /** Scope a query to only include rota slot staff with shift slot type.*/
