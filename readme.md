@@ -7,6 +7,7 @@
 
 
 ### Notes
-- The starttime and endtime do not end in the same end. As such we cannot use
-timediff, to time_to_sec query options. So, the only thing I knew we could do,
-is to rely on PHP instead.
+- The starttime and endtime do not end in the same day. As such we cannot use
+timediff, or time_to_sec query options. So, the only thing we could do, in my
+opinion, is to rely on PHP instead. See
+`tests\Unit\app\Acme\RotalSlotStaff\BonusWorkHoursTest.php`
